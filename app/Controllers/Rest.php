@@ -12,24 +12,34 @@ class Rest extends ResourceController
     // 通常取全部資料
     public function index()
     {
-        $data = array(
-            'id' => 1,
-            'name' => 'Andersen',
-            'data' =>
-            array(
-              0 => array(
-                'key1' => 'val1',
-              ),
-              1 => array(
-                'key2' => 'val2',
-              ),
-              2 => array(
-                'key3' => 'val3',
-              ),
-            ),
-        );
+        // $data = array(
+        //     'id' => 1,
+        //     'name' => 'Andersen',
+        //     'data' =>
+        //     array(
+        //       0 => array(
+        //         'key1' => 'val1',
+        //       ),
+        //       1 => array(
+        //         'key2' => 'val2',
+        //       ),
+        //       2 => array(
+        //         'key3' => 'val3',
+        //       ),
+        //     ),
+        // );
 
-        return $this->respond($data);
+        $db = db_connect();
+        
+        $sql = "SELECT `id`, `name`, `created_date` from friends WHERE `id` > ?;";
+        // xdebug_break();
+        $query = $db->query($sql, [1]);
+        
+        $result = $query->getResult();
+        
+        $db->close();
+
+        return $this->respond($result);
     }
 
     // 通常取一筆資料

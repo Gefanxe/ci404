@@ -39,8 +39,6 @@ class Test extends BaseController
 
     public function info()
     {
-        $myval = "1";
-        $myVal = '2'. $myval;
         phpinfo();
     }
 
@@ -50,5 +48,45 @@ class Test extends BaseController
         $b = 2;
         $res = $a + $b;
         return (string)$res;
+    }
+
+    public function testdb()
+    {
+        $db = db_connect();
+        
+        $sql = "SELECT `id`, `name`, `created_date` from friends WHERE `id` > ?;";
+        // xdebug_break();
+        $query = $db->query($sql, [1]);
+
+        foreach ($query->getResult() as $row)
+        {
+            echo $row->id. ', '. $row->name. ', '. $row->created_date. '<br>';
+        }
+
+        $db->close();
+        return "";
+    }
+
+    public function testview()
+    {
+        $data = [
+            'myVar' => 'hello'
+        ];
+        echo view('pages/test_view', $data);
+    }
+
+    public function testmodel()
+    {
+        $db = db_connect();
+
+        $userModel = model('UserModel', true, $db);
+
+        $user = $userModel->find(1);
+
+        $db->close();
+
+        echo "<pre>";
+        print_r($user);
+        echo "</pre>";
     }
 }
