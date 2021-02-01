@@ -27,7 +27,7 @@ class UserModel extends Model
 
     protected $validationMessages = [
         'email' => [
-            'is_unique' => 'Sorry. That email has already been taken. Please choose another.'
+            'is_unique' => 'Email不能重複哦'
         ]
     ];
     protected $skipValidation = false;
@@ -36,8 +36,7 @@ class UserModel extends Model
     {
         if (! isset($data['data']['password'])) return $data;
 
-        $data['data']['password_hash'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
-        // unset($data['data']['password']);
+        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
 
         return $data;
     }

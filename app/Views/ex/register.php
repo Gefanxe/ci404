@@ -24,7 +24,15 @@
 </head>
 
 <body>
-    <form name="regisForm" method="post" onsubmit="return frmPost(this)">
+<?php
+    if (isset($error)) {
+        echo '<pre>';
+        print_r($error);
+        echo '</pre>';
+    }
+?>
+    <!-- <form name="regisForm" method="post" onsubmit="return frmPost(this)"> -->
+    <form name="regisForm" method="post" action="/ex/save2">
         <fieldset>
             <legend>註冊表單</legend>
             <p>

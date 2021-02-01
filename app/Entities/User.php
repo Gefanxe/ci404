@@ -17,6 +17,7 @@ class User extends Entity
         'deleted_at' => null
     ];
 
+    // 會依 "set + 屬性名稱" 的方式自動套用的邏輯
     // public function setPassword(string $pass)
     // {
     //     $this->attributes['password_hash'] = password_hash($pass, PASSWORD_BCRYPT);

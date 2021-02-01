@@ -26,28 +26,56 @@ class Ex extends BaseController
         if (!$this->request->isAJAX()) die('bad request ajax');
         if ($method != 'post') die('bad request');
 
+        $postData = $this->request->getJSON();
 
         $user = new \App\Entities\User();
 
-        $postData = $this->request->getJSON();
-
         $user->fill((array)$postData);
-
-        // $user->setPassword($postData->password);
-
-        // echo '<pre>';
-        // print_r($user);
-        // echo '</pre>';
 
         $db = db_connect();
 
         $userModel = model('UserModel', true, $db);
 
         if ($userModel->save($user) === false) {
-            // return view('updateUser', ['errors' => $userModel->errors()]);
+            
             echo '<pre>';
             print_r($userModel->errors());
             echo '</pre>';
+        } else {
+            echo "ok";
+        }
+
+        $db->close();
+
+    }
+
+    public function save2()
+    {
+        $method = $this->request->getMethod();
+        
+        // if (!$this->request->isAJAX()) die('bad request ajax');
+        if ($method != 'post') die('bad request');
+
+        $postData = $this->request->getPost();
+        
+        $user = new \App\Entities\User();
+
+        $user->fill($postData);
+
+        $db = db_connect();
+
+        $userModel = model('UserModel', true, $db);
+
+        if ($userModel->save($user) === false) {
+            
+            // echo '<pre>';
+            // print_r($userModel->errors());
+            // echo '</pre>';
+
+            $data = [
+                'error' => $userModel->errors()
+            ];
+            echo view('ex/register', $data);
         } else {
             echo "ok";
         }
