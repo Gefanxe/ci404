@@ -89,4 +89,26 @@ class Test extends BaseController
         print_r($user);
         echo "</pre>";
     }
+
+    public function sendmail()
+    {
+        $email = \Config\Services::email();
+
+        $email->setFrom('actfire@gmail.com', 'Andersen');
+        $email->setTo('kkactfire@gmail.com');
+        // $email->setCC('another@another-example.com');
+        // $email->setBCC('them@their-example.com');
+
+        $email->setSubject('Email Test');
+        $email->setMessage('Testing the email class.');
+
+        $result = $email->send(false);
+
+        if ($result) {
+            echo 'ok';
+        } else {
+            // echo 'fail';
+            echo $email->printDebugger(['headers']);
+        }
+    }
 }
