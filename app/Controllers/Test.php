@@ -111,4 +111,11 @@ class Test extends BaseController
             echo $email->printDebugger(['headers']);
         }
     }
+
+    public function showenv()
+    {
+      $config = config('Database');
+
+      echo $host = $config->default['hostname'];
+    }
 }
